@@ -13,7 +13,6 @@ class Game:
 
         self.lives = 11
         self.score = 0
-
         
         self.canvas = tk.Canvas(self.root, width=self.width, height=self.height, bg="black")
         self.canvas.pack() # Create canvas game
