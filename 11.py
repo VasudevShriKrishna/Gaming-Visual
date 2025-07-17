@@ -11,56 +11,46 @@ class Game:
         self.width = 600
         self.height = 400
 
-        # Initialize lives and score
         self.lives = 11
         self.score = 0
 
-        # Create canvas for the game
+        
         self.canvas = tk.Canvas(self.root, width=self.width, height=self.height, bg="black")
-        self.canvas.pack()
+        self.canvas.pack() # Create canvas game
 
-        # Initialize tank position and size
         self.tank_width = 60
         self.tank_height = 30
         self.tank = self.canvas.create_rectangle(self.width//2 - self.tank_width//2, self.height - self.tank_height - 10,
                                                  self.width//2 + self.tank_width//2, self.height - 10, fill="green")
 
-        # Initialize bullets list
         self.bullets = []
-
-        # Initialize aliens list
         self.aliens = []
         self.max_aliens = 211  # Max number of aliens at a time
         self.create_aliens()
 
-        # Display score and lives
+        
         self.score_text = self.canvas.create_text(10, 10, anchor="nw", text=f"Score: {self.score}", fill="white", font=('Helvetica', 12))
-        self.lives_text = self.canvas.create_text(self.width - 10, 10, anchor="ne", text=f"Lives: {self.lives}", fill="white", font=('Helvetica', 12))
+        self.lives_text = self.canvas.create_text(self.width - 10, 10, anchor="ne", text=f"Lives: {self.lives}", fill="white", font=('Helvetica', 12)) # Display score and lives
 
         # Key bindings for tank movement and firing
         self.root.bind("<Left>", self.move_left)
         self.root.bind("<Right>", self.move_right)
         self.root.bind("<space>", self.fire_bullets)  # Fire multiple bullets at once
 
-        # Start game loop
         self.update_game()
 
     def move_left(self, event):
-        """Move tank left."""
-        self.canvas.move(self.tank, -20, 0)
+        self.canvas.move(self.tank, -20, 0) """Move tank left."""
 
     def move_right(self, event):
-        """Move tank right."""
-        self.canvas.move(self.tank, 20, 0)
+        self.canvas.move(self.tank, 20, 0) """Move tank right."""
 
-    def fire_bullets(self, event):
-        """Fire five bullets at once in different directions (70°, 75°, 80°, 85°, 90°)."""
+    def fire_bullets(self, event):"""Fire multiple bullets at once in different directions."""
         x1, y1, x2, y2 = self.canvas.coords(self.tank)
         angles = [54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108]  # Angles in degrees for each bullet
         speed = 10  # Speed of the bullet movement
         
-        for angle in angles:
-            # Convert angle to radians for trigonometric calculations
+        for angle in angles: # Convert angle to radian for trigonometric calculations
             radian = math.radians(angle)
             
             # Calculate the movement direction for each bullet
@@ -92,9 +82,7 @@ class Game:
         self.move_aliens()
         self.check_collisions()
         self.check_game_over()
-
-        # Update score and lives display
-        self.canvas.itemconfig(self.score_text, text=f"Score: {self.score}")
+        self.canvas.itemconfig(self.score_text, text=f"Score: {self.score}") # Update score and lives
         self.canvas.itemconfig(self.lives_text, text=f"Lives: {self.lives}")
 
         # Continue the game if lives are not over
@@ -148,9 +136,8 @@ class Game:
             self.canvas.create_text(self.width//2, self.height//2, text="GAME OVER", fill="red", font=('Helvetica', 30))
             self.root.after(1000, self.root.quit)  # Quit the game after 1 second
 
-# Create the game window
-root = tk.Tk()
+
+root = tk.Tk() # Create game window
 game = Game(root)
 
-# Start the game
-root.mainloop()
+root.mainloop() # Start game
